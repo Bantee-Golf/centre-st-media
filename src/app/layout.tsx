@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Centre St Media | BYU Sports Content & Gear",
+  title: "Centr St Media | College Sports Content & Gear",
   description:
-    "Centre Street Media — BYU sports coverage, podcasts, and officially licensed gear powered by Rye checkout.",
+    "College sports coverage, athlete stories, and officially licensed gear \u2014 powered by Rye checkout.",
   openGraph: {
-    title: "Centre St Media",
-    description: "BYU sports content, podcasts, and gear.",
-    url: "https://centrestmedia.vercel.app",
-    siteName: "Centre St Media",
+    title: "Centr St Media",
+    description: "College sports content and gear.",
+    url: "https://centrstmedia.vercel.app",
+    siteName: "Centr St Media",
     type: "website",
   },
 };

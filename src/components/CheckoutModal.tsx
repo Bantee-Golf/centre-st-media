@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Product } from "@/lib/products";
+import { Product, Community } from "@/lib/communities";
 
 interface Props {
   product: Product;
+  community: Community;
   onClose: () => void;
 }
 
 type Step = "address" | "processing" | "confirmed" | "error";
 
-export default function CheckoutModal({ product, onClose }: Props) {
+export default function CheckoutModal({ product, community, onClose }: Props) {
   const [step, setStep] = useState<Step>("address");
   const [error, setError] = useState<string | null>(null);
 
@@ -59,13 +60,7 @@ export default function CheckoutModal({ product, onClose }: Props) {
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Checkout failed");
-      }
-
-      // In production, this would poll for status then confirm with Stripe.
-      // For demo, we show the intent was created successfully.
+      if (!res.ok) throw new Error(data.error || "Checkout failed");
       setStep("confirmed");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -74,103 +69,52 @@ export default function CheckoutModal({ product, onClose }: Props) {
   };
 
   const isFormValid =
-    form.firstName &&
-    form.lastName &&
-    form.email &&
-    form.address1 &&
-    form.city &&
-    form.state &&
-    form.postalCode;
+    form.firstName && form.lastName && form.email && form.address1 && form.city && form.state && form.postalCode;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
-      <div className="relative w-full max-w-lg bg-surface rounded-2xl border border-border shadow-2xl overflow-hidden">
+      <div
+        className="relative w-full max-w-md rounded-2xl border border-white/[0.08] shadow-2xl overflow-hidden"
+        style={{ backgroundColor: community.colors.dark }}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <div>
-            <h3 className="text-lg font-bold">Checkout</h3>
-            <p className="text-sm text-muted mt-0.5 line-clamp-1">
-              {product.name}
-            </p>
+        <div className="flex items-start justify-between p-5 pb-4 border-b border-white/[0.06]">
+          <div className="pr-4">
+            <h3 className="text-base font-bold">Checkout</h3>
+            <p className="text-xs text-white/40 mt-1 line-clamp-1">{product.name}</p>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-white/10 transition-colors text-muted"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button onClick={onClose} className="p-1.5 -mr-1.5 -mt-0.5 rounded-lg hover:bg-white/[0.06] transition-colors text-white/40 hover:text-white/80">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-5">
           {step === "address" && (
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
-                <Input
-                  label="First name"
-                  value={form.firstName}
-                  onChange={(v) => update("firstName", v)}
-                />
-                <Input
-                  label="Last name"
-                  value={form.lastName}
-                  onChange={(v) => update("lastName", v)}
-                />
+                <Field label="First name" value={form.firstName} onChange={(v) => update("firstName", v)} />
+                <Field label="Last name" value={form.lastName} onChange={(v) => update("lastName", v)} />
               </div>
-              <Input
-                label="Email"
-                type="email"
-                value={form.email}
-                onChange={(v) => update("email", v)}
-              />
-              <Input
-                label="Phone"
-                type="tel"
-                value={form.phone}
-                onChange={(v) => update("phone", v)}
-              />
-              <Input
-                label="Address"
-                value={form.address1}
-                onChange={(v) => update("address1", v)}
-              />
-              <Input
-                label="Apt / Suite (optional)"
-                value={form.address2}
-                onChange={(v) => update("address2", v)}
-              />
+              <Field label="Email" type="email" value={form.email} onChange={(v) => update("email", v)} />
+              <Field label="Phone" type="tel" value={form.phone} onChange={(v) => update("phone", v)} />
+              <Field label="Address" value={form.address1} onChange={(v) => update("address1", v)} />
+              <Field label="Apt / Suite" value={form.address2} onChange={(v) => update("address2", v)} />
               <div className="grid grid-cols-3 gap-3">
-                <Input
-                  label="City"
-                  value={form.city}
-                  onChange={(v) => update("city", v)}
-                />
-                <Input
-                  label="State"
-                  value={form.state}
-                  onChange={(v) => update("state", v)}
-                />
-                <Input
-                  label="ZIP"
-                  value={form.postalCode}
-                  onChange={(v) => update("postalCode", v)}
-                />
+                <Field label="City" value={form.city} onChange={(v) => update("city", v)} />
+                <Field label="State" value={form.state} onChange={(v) => update("state", v)} />
+                <Field label="ZIP" value={form.postalCode} onChange={(v) => update("postalCode", v)} />
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-border">
+              <div className="flex items-center justify-between pt-4 mt-1 border-t border-white/[0.06]">
                 <span className="text-lg font-bold">{product.price}</span>
                 <button
                   onClick={handleCheckout}
                   disabled={!isFormValid}
-                  className="px-6 py-3 rounded-full bg-white text-[#041E42] font-semibold hover:bg-blue-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   Place Order
                 </button>
@@ -179,76 +123,40 @@ export default function CheckoutModal({ product, onClose }: Props) {
           )}
 
           {step === "processing" && (
-            <div className="text-center py-12">
-              <div className="w-12 h-12 mx-auto mb-4 border-4 border-white/20 border-t-white rounded-full animate-spin" />
-              <p className="text-muted">
-                Creating checkout with Rye&hellip;
-              </p>
+            <div className="text-center py-16">
+              <div className="w-10 h-10 mx-auto mb-4 border-[3px] border-white/10 border-t-white rounded-full animate-spin" />
+              <p className="text-sm text-white/40">Creating checkout&hellip;</p>
             </div>
           )}
 
           {step === "confirmed" && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
+            <div className="text-center py-16">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-emerald-500/15 flex items-center justify-center">
+                <svg className="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h4 className="text-xl font-bold mb-2">
-                Checkout Intent Created
-              </h4>
-              <p className="text-muted text-sm max-w-xs mx-auto">
-                In production, this would proceed to Stripe payment
-                confirmation. The order would be fulfilled by the Penn State
-                team shop via Rye.
+              <h4 className="text-lg font-bold mb-2">Checkout Created</h4>
+              <p className="text-xs text-white/40 max-w-xs mx-auto leading-relaxed">
+                In production this proceeds to Stripe payment. Order fulfilled by {community.storeName} via Rye.
               </p>
-              <button
-                onClick={onClose}
-                className="mt-6 px-6 py-2 rounded-full border border-white/25 text-sm hover:bg-white/10 transition-colors"
-              >
-                Close
+              <button onClick={onClose} className="mt-6 px-5 py-2 rounded-full border border-white/10 text-sm hover:bg-white/[0.06] transition-all">
+                Done
               </button>
             </div>
           )}
 
           {step === "error" && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-red-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z"
-                  />
+            <div className="text-center py-16">
+              <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-red-500/15 flex items-center justify-center">
+                <svg className="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M12 3a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
               </div>
-              <h4 className="text-xl font-bold mb-2">Checkout Failed</h4>
-              <p className="text-muted text-sm max-w-xs mx-auto">
-                {error || "Something went wrong. Please try again."}
-              </p>
-              <p className="text-muted text-xs mt-2">
-                Ensure RYE_API_KEY is set in environment variables.
-              </p>
-              <button
-                onClick={() => setStep("address")}
-                className="mt-6 px-6 py-2 rounded-full border border-white/25 text-sm hover:bg-white/10 transition-colors"
-              >
+              <h4 className="text-lg font-bold mb-2">Checkout Failed</h4>
+              <p className="text-xs text-white/40 max-w-xs mx-auto">{error}</p>
+              <p className="text-[11px] text-white/20 mt-1">Ensure RYE_API_KEY is configured.</p>
+              <button onClick={() => setStep("address")} className="mt-6 px-5 py-2 rounded-full border border-white/10 text-sm hover:bg-white/[0.06] transition-all">
                 Try Again
               </button>
             </div>
@@ -259,25 +167,15 @@ export default function CheckoutModal({ product, onClose }: Props) {
   );
 }
 
-function Input({
-  label,
-  value,
-  onChange,
-  type = "text",
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  type?: string;
-}) {
+function Field({ label, value, onChange, type = "text" }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
   return (
     <div>
-      <label className="block text-xs text-muted mb-1">{label}</label>
+      <label className="block text-[11px] text-white/30 mb-1 font-medium">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 rounded-lg bg-card-bg border border-border text-sm text-white placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-white/20"
+        className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06] text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/15 transition-all"
       />
     </div>
   );

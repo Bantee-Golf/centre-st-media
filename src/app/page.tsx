@@ -1,19 +1,6 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import VideoSection from "@/components/VideoSection";
-import ShopSection from "@/components/ShopSection";
-import Footer from "@/components/Footer";
+import { DEFAULT_COMMUNITY } from "@/lib/communities";
+import CommunityPage from "@/components/CommunityPage";
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <VideoSection />
-        <ShopSection />
-      </main>
-      <Footer />
-    </>
-  );
+  return <CommunityPage community={DEFAULT_COMMUNITY} />;
 }
