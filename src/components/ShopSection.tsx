@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Community, Product } from "@/lib/communities";
 import CheckoutModal from "./CheckoutModal";
 
@@ -12,9 +13,8 @@ export default function ShopSection({ community }: Props) {
   const [selected, setSelected] = useState<Product | null>(null);
 
   return (
-    <section id="shop" className="py-20 sm:py-28">
+    <section id="shop" className="py-20 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
         <div className="flex items-end justify-between mb-10">
           <div>
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/30 mb-2">
@@ -41,14 +41,8 @@ export default function ShopSection({ community }: Props) {
               key={product.id}
               className="group rounded-2xl bg-white/[0.03] border border-white/[0.04] overflow-hidden hover:border-white/[0.12] hover:bg-white/[0.05] transition-all"
             >
-              {/* Product visual */}
-              <div className="relative aspect-[4/3] flex items-center justify-center overflow-hidden">
-                <div
-                  className="absolute inset-0 opacity-40"
-                  style={{
-                    background: `linear-gradient(135deg, ${community.colors.accent}20, ${community.colors.dark}40)`,
-                  }}
-                />
+              {/* Product image */}
+              <div className="relative aspect-square overflow-hidden bg-white/[0.02]">
                 {product.tag && (
                   <span
                     className="absolute top-3 left-3 px-2.5 py-0.5 text-[11px] font-bold tracking-wide uppercase rounded-full z-10"
@@ -60,14 +54,27 @@ export default function ShopSection({ community }: Props) {
                     {product.tag}
                   </span>
                 )}
-                <div className="relative z-10 text-center p-6">
-                  <div className="w-14 h-14 mx-auto mb-2 rounded-full bg-white/[0.06] flex items-center justify-center">
-                    <svg className="w-7 h-7 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
+
+                {product.image ? (
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div
+                      className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                      style={{ backgroundColor: `${community.colors.accent}15` }}
+                    >
+                      <svg className="w-10 h-10 text-white/15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                      </svg>
+                    </div>
                   </div>
-                  <p className="text-[11px] text-white/25 font-medium">{community.storeName}</p>
-                </div>
+                )}
               </div>
 
               <div className="p-5">

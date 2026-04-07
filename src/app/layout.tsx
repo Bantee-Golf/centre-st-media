@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Centr St Media | College Sports Content & Gear",
+  title: "College Sports Co | Campus Content & Gear",
   description:
-    "College sports coverage, athlete stories, and officially licensed gear \u2014 powered by Rye checkout.",
+    "College sports media, athlete stories, and officially licensed gear for every school.",
   openGraph: {
-    title: "Centr St Media",
-    description: "College sports content and gear.",
-    url: "https://centrstmedia.vercel.app",
-    siteName: "Centr St Media",
+    title: "College Sports Co",
+    description: "Campus content and gear for every school.",
+    url: "https://collegesportsco.vercel.app",
+    siteName: "College Sports Co",
     type: "website",
   },
 };

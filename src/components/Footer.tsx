@@ -72,7 +72,7 @@ export default function Footer({ community, allCommunities }: Props) {
         </div>
 
         <div className="mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-white/20">
-          <p>&copy; {new Date().getFullYear()} Centr St Media</p>
+          <p>&copy; {new Date().getFullYear()} College Sports Co</p>
           <p>
             Checkout by{" "}
             <a href="https://rye.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40 transition-colors">

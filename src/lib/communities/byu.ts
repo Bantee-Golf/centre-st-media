@@ -85,6 +85,7 @@ const byu: Community = {
       name: "Jimmer Fredette BYU Hoodie \u2014 SLAM",
       price: "$39.00",
       url: "https://www.byustore.com/SLAM-Cover-Hoodie-Jimmer-Fredette",
+      image: "https://www.byustore.com/site/product_images/1839521+SLAM+Cover+Hoodie++Jimmer+Fredette_BLACK-1.jpg?resizeid=2&resizeh=600&resizew=600",
       tag: "Sale",
     },
     {
@@ -92,18 +93,21 @@ const byu: Community = {
       name: "Brigham Young Alumni Crewneck \u2014 Hype and Vice",
       price: "$86.00",
       url: "https://www.byustore.com/Hype-Vice-BYU-OFFSIDE-CREWNECK-Alumni",
+      image: "https://www.byustore.com/site/product_images/1842252+Hype++Vice+BYU+OFFSIDE+CREWNECK+Alumni_main-1.jpg?resizeid=2&resizeh=600&resizew=600",
     },
     {
       id: "byu-cougars-crew",
       name: "Cougars BYU Crewneck \u2014 47 Brand Wynwood",
       price: "$80.00",
       url: "https://www.byustore.com/47-Brand-Wynwood-HEADLINE-Hood",
+      image: "https://www.byustore.com/site/product_images/1841886+47+Brand+Wynwood+HEADLINE+Hood_main-1.jpg?resizeid=2&resizeh=600&resizew=600",
     },
     {
       id: "byu-walk-tall-crew",
       name: "Cougars BYU Crewneck \u2014 47 Brand Walk Tall",
       price: "$75.00",
       url: "https://www.byustore.com/47-Brand-M-Walk-Tall-Headline-Crew",
+      image: "https://www.byustore.com/site/product_images/1841877+47+Brand+M+Walk+Tall+Headline+Crew_main-1.jpg?resizeid=2&resizeh=600&resizew=600",
     },
     {
       id: "byu-think-celestial",
@@ -116,6 +120,7 @@ const byu: Community = {
       name: "Youth Cosmo BYU Crewneck \u2014 Made by Ei8ht",
       price: "$58.00",
       url: "https://www.byustore.com/MB8-YOUTH-CHENILLE-BB-COSMO-SWEATSHIRT",
+      image: "https://www.byustore.com/site/product_images/1839650+MB8+YOUTH+CHENILLE+BB+COSMO+SWEATSHIRT_ROYALBLUE-1.jpg?resizeid=2&resizeh=600&resizew=600",
     },
   ],
 };

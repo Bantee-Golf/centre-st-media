@@ -18,18 +18,26 @@ export default function Header({ community, allCommunities }: Props) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/[0.06]" style={{ backgroundColor: `${community.colors.darker}ee` }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <a href={`/${community.slug === "byu" ? "" : community.slug}`} className="flex items-center gap-3 group">
+        <div className="flex items-center justify-between h-14">
+          <div className="flex items-center gap-4">
+            <a href="/" className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors">
+              <div className="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center">
+                <span className="text-white/60 font-bold text-[9px]">CS</span>
+              </div>
+            </a>
+            <span className="text-white/15">/</span>
+            <a href={`/${community.slug}`} className="flex items-center gap-2.5 group">
             <div
               className="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-sm transition-transform group-hover:scale-105"
               style={{ backgroundColor: community.colors.accent, color: "#fff" }}
             >
               {community.shortName.slice(0, 2).toUpperCase()}
             </div>
-            <span className="text-base font-semibold tracking-tight hidden sm:block">
+            <span className="text-sm font-semibold tracking-tight hidden sm:block">
               {community.name}
             </span>
           </a>
+          </div>
 
           <nav className="hidden md:flex items-center gap-1">
             <NavLink href="#videos">Videos</NavLink>
