@@ -1,22 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Community, Product } from "@/lib/communities";
 import CheckoutModal from "./CheckoutModal";
+
+interface EnrichedProduct extends Product {
+  variants?: Array<{
+    id: string;
+    title: string;
+    available: boolean;
+    price?: string;
+    image?: string;
+    options?: Array<{ name: string; value: string }>;
+  }>;
+  ryeProductId?: string | null;
+  source?: "rye" | "static";
+}
 
 interface Props {
   community: Community;
 }
 
 export default function ShopSection({ community }: Props) {
-  const [selected, setSelected] = useState<Product | null>(null);
+  const [products, setProducts] = useState<EnrichedProduct[]>(community.products);
+  const [selected, setSelected] = useState<EnrichedProduct | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchProducts() {
+      try {
+        const res = await fetch(`/api/products?community=${community.slug}`);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        if (!cancelled && data.products) {
+          setProducts(data.products);
+        }
+      } catch {
+        // Fall back to static product data (already set)
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchProducts();
+    return () => { cancelled = true; };
+  }, [community.slug]);
 
   return (
     <section id="shop">
-      {/* Section header */}
       <div className="flex items-end justify-between mb-5">
-        <h2 className="text-xl font-bold">Shop</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-bold">Shop</h2>
+          {loading && (
+            <div className="w-3.5 h-3.5 border-2 border-white/10 border-t-white/40 rounded-full animate-spin" />
+          )}
+        </div>
         <a
           href={community.storeUrl}
           target="_blank"
@@ -30,9 +71,8 @@ export default function ShopSection({ community }: Props) {
         </a>
       </div>
 
-      {/* Product list */}
       <div className="flex flex-col gap-3">
-        {community.products.map((product) => (
+        {products.map((product) => (
           <article
             key={product.id}
             className="group flex gap-3 rounded-xl bg-white/[0.03] border border-white/[0.04] overflow-hidden hover:border-white/[0.12] hover:bg-white/[0.05] transition-all"
@@ -48,6 +88,11 @@ export default function ShopSection({ community }: Props) {
                   }}
                 >
                   {product.tag}
+                </span>
+              )}
+              {product.source === "rye" && (
+                <span className="absolute bottom-1 right-1 px-1 py-0.5 text-[8px] font-bold uppercase rounded bg-emerald-500/20 text-emerald-400 z-10">
+                  Live
                 </span>
               )}
 
