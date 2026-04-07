@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Community } from "@/lib/communities";
+
+const CSCO_LOGO =
+  "https://cdn.prod.website-files.com/65a14c5684cdbc76b9557f2a/662c18fa86058d7c17bda67a_TheCSco_Beige_Clean.svg";
 
 interface Props {
   community: Community;
@@ -20,19 +24,24 @@ export default function Header({ community, allCommunities }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <div className="flex items-center gap-4">
-            <a href="/" className="flex items-center gap-2 text-white/30 hover:text-white/60 transition-colors">
-              <div className="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center">
-                <span className="text-white/60 font-bold text-[9px]">CS</span>
-              </div>
+            <a href="/" className="flex items-center hover:opacity-80 transition-opacity">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={CSCO_LOGO} alt="College Sports Co" className="h-5 w-auto opacity-40" />
             </a>
             <span className="text-white/15">/</span>
             <a href={`/${community.slug}`} className="flex items-center gap-2.5 group">
-            <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-sm transition-transform group-hover:scale-105"
-              style={{ backgroundColor: community.colors.accent, color: "#fff" }}
-            >
-              {community.shortName.slice(0, 2).toUpperCase()}
-            </div>
+            {community.logo ? (
+              <div className="w-8 h-8 rounded-lg bg-white/95 flex items-center justify-center p-1 transition-transform group-hover:scale-105">
+                <Image src={community.logo} alt={community.shortName} width={24} height={24} className="object-contain" />
+              </div>
+            ) : (
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm transition-transform group-hover:scale-105"
+                style={{ backgroundColor: community.colors.accent, color: "#fff" }}
+              >
+                {community.shortName.slice(0, 2).toUpperCase()}
+              </div>
+            )}
             <span className="text-sm font-semibold tracking-tight hidden sm:block">
               {community.name}
             </span>

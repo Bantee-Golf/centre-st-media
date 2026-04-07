@@ -11,6 +11,7 @@ const byu: Community = {
   youtubeHandle: "@CenterStMedia",
   storeUrl: "https://www.byustore.com",
   storeName: "BYU Store",
+  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/BYU_Cougars_logo.svg/200px-BYU_Cougars_logo.svg.png",
   colors: {
     primary: "#002E5D",
     dark: "#001A3A",

@@ -11,6 +11,7 @@ const psu: Community = {
   youtubeHandle: "@StateMediaPSU",
   storeUrl: "https://shop.gopsusports.com",
   storeName: "Penn State Team Shop",
+  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Penn_State_Nittany_Lions_logo.svg/200px-Penn_State_Nittany_Lions_logo.svg.png",
   colors: {
     primary: "#041E42",
     dark: "#021633",

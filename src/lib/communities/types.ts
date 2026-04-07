@@ -22,6 +22,8 @@ export interface Community {
   youtubeHandle: string;
   storeUrl: string;
   storeName: string;
+  /** URL to school/mascot logo (transparent PNG or SVG) */
+  logo?: string;
   videos: Video[];
   products: Product[];
   colors: {

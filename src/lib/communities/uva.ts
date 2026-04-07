@@ -11,6 +11,7 @@ const uva: Community = {
   youtubeHandle: "@CornerMediaCo",
   storeUrl: "https://shop.virginiasports.com",
   storeName: "Virginia Team Shop",
+  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Virginia_Cavaliers_sabre.svg/200px-Virginia_Cavaliers_sabre.svg.png",
   colors: {
     primary: "#232D4B",
     dark: "#1A2238",

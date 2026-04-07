@@ -2,6 +2,9 @@ import { getAllCommunities } from "@/lib/communities";
 import Image from "next/image";
 import type { Metadata } from "next";
 
+const CSCO_LOGO =
+  "https://cdn.prod.website-files.com/65a14c5684cdbc76b9557f2a/662c18fa86058d7c17bda67a_TheCSco_Beige_Clean.svg";
+
 export const metadata: Metadata = {
   title: "College Sports Co | Campus Content & Gear",
   description:
@@ -16,11 +19,9 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#080C14]/90 border-b border-white/[0.04]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
-          <a href="/" className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-md bg-white flex items-center justify-center">
-              <span className="text-[#080C14] font-extrabold text-[11px]">CS</span>
-            </div>
-            <span className="text-sm font-semibold tracking-tight">College Sports Co</span>
+          <a href="/" className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={CSCO_LOGO} alt="College Sports Co" className="h-7 w-auto" />
           </a>
         </div>
       </header>
@@ -30,18 +31,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A1020] via-[#080C14] to-[#080C14]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_60%)]" />
 
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/25 mb-5">
-            Campus Media Network
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15]">
-            Every school has
-            <br />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={CSCO_LOGO} alt="College Sports Co" className="h-12 w-auto mx-auto mb-8 opacity-80" />
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15]">
+            Every school has{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">
               a story to tell
             </span>
           </h1>
-          <p className="mt-5 text-base text-white/35 max-w-md mx-auto leading-relaxed">
+          <p className="mt-4 text-sm text-white/35 max-w-md mx-auto leading-relaxed">
             Athlete-driven content, campus culture, and officially licensed gear &mdash; powered by the communities that know their schools best.
           </p>
         </div>
@@ -80,14 +79,26 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* School badge */}
+                  {/* School logo */}
                   <div className="absolute top-3 left-3">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-[11px] text-white shadow-lg"
-                      style={{ backgroundColor: c.colors.accent }}
-                    >
-                      {c.shortName.slice(0, 2).toUpperCase()}
-                    </div>
+                    {c.logo ? (
+                      <div className="w-10 h-10 rounded-lg bg-white/95 flex items-center justify-center p-1.5 shadow-lg">
+                        <Image
+                          src={c.logo}
+                          alt={c.shortName}
+                          width={28}
+                          height={28}
+                          className="object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xs text-white shadow-lg"
+                        style={{ backgroundColor: c.colors.accent }}
+                      >
+                        {c.shortName.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
                   </div>
 
                   {/* Video count */}
@@ -127,7 +138,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-white/[0.04] py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-white/20">
-          <p>&copy; {new Date().getFullYear()} College Sports Co</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={CSCO_LOGO} alt="College Sports Co" className="h-5 w-auto opacity-30" />
           <p>
             Checkout by{" "}
             <a href="https://rye.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40 transition-colors">
